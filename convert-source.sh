@@ -18,18 +18,12 @@ for source in $sources; do
 
   echo "Convert $source to $outname"
 
-  #dos2unix $source -O |
-
-   sed $source -E \
+   cat $source | dos2unix | \
+   sed -E \
       -e 's#:\\# ;#' \
       -e 's#\\\\#;;#' \
-      -e 's#^[[:space:]]*\\#;#' \
-      -e 's#("[^"]*")\\#\1;#' \
+      -e 's#\\#\;#' \
       -e '/^;/!s/:/\n/g' \
-      -e 's#^\.([a-zA-Z0-9_]*)#\1:##' \
-      -e 's#EQUB#.byte #g' \
-      -e 's#EQUW#.word #g' \
-      -e 's#EQUS#.byte #g' \
       -e 's#&([A-Za-z0-9]+)#$\1#g' \
       -e 's#(\s)SKIP(\s)#\1.res\2#' \
       -e 's#(\s)INCLUDE #.include #' \
@@ -46,11 +40,20 @@ for source in $sources; do
 
     # Break up matches that rely on start of line, after earlier splitting
     sed -i $outname -E \
-       -e 's#^[[:space:]]*([A-Z][A-Z][A-Z])# \1 #' \
+       -e 's#^[[:space:]]*\\#;#' \
+       -e 's#^[[:space:]]*\.([a-zA-Z0-9_]*)#\1:\n##' \
+
+    sed -i $outname -E \
+       -e 's#EQUB#.byte #' \
+       -e 's#EQUW#.word #' \
+       -e 's#EQUD#.dword #' \
+       -e 's#EQUS#.byte #' \
+       -e '/:$/!s/^[[:space:]]*([A-Z][A-Z][A-Z])/ \1 /' \
        -e 's#([A-Za-z0-9_]+) MOD ([0-9]+)#(\1 .mod \2)#' \
        -e 's#([A-Za-z0-9_]+) DIV ([0-9]+)#(\1 / \2)#' \
        -e 's#([A-Za-z0-9_]+) EOR ([0-9]+)#(\1 .bitxor \2)#' \
-
+       -e 's#\.byte[ \t]+(.*-.*)#.byte (\1) \& $ff#' \
+       -e 's#\.word[ \t]+(.*-.*)#.word (\1) \& $ffff#' \
 
       # -e expressions above
       # .label -> label:
