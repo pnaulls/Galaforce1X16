@@ -17,10 +17,9 @@ process () {
 
   echo -n "$statement" | sed -E \
       -e 's#&([A-Za-z0-9]+)#$\1#g' \
-      -e 's#(\s)SKIP(\s)#\1.res\2#' \
+      -e 's#SKIP#\#SKIP#' \
       -e 's#INCLUDE #\#INCLUDE #' \
       -e 's#INCBIN #\#INCBIN #' \
-      -e 's#\sobjcodeend# ; objcodeend not implemented#' \
       -e 's#\MAPCHAR#\#MAPCHAR#' \
       -e 's#PRINT# ; PRINT not implemented#' \
       -e 's#SAVE# ; SAVE not implemented#' \
@@ -43,7 +42,11 @@ process () {
       -e 's#\s*ORG#.org#' \
       -e 's#^\s*\#MAPCHAR#;.charmap#' \
       -e 's#\s*\#INCLUDE#.include#' \
-      -e 's#\s*\#INCBIN#.incbin#' >> $outname
+      -e 's#\s*\#INCBIN#.incbin#' \
+      -e 's#\#SKIP#.res#' \
+      -e 's#P%#*#' \
+      -e 's#([A-Za-z0-9_]+)%#\1#' \
+      >> $outname
 
        # EQUB -> .byte
        # EQUW -> .word
@@ -126,7 +129,9 @@ for source in $sources; do
       fi
 
       if $label ; then
-        if [ "$char" == ' ' ] ; then
+        tab_char=$'\t'
+
+        if [ "$char" == ' ' -o "$char" == "$tab_char" ] ; then
           process "$before"
           before=""
           label=false
