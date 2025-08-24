@@ -19,8 +19,8 @@
 .org  $400
 .segment "DATA"
 
-;stardat:    ;; Doesn;'t fit in zeropage
-;.res 3 * 31
+stardat:    ;; Doesn;'t fit in zeropage
+.res 3 * 31
 
 alst:
 		.res maxaliens

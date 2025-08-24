@@ -40,8 +40,8 @@ gcol:
  AND  #$15
  BEQ  gcol
  STA  stardat+2,X
- EOR  (stardat,X)
- STA  (stardat,X)
+ EOR  stardat,X ;EOR  (stardat,X)
+ STA  stardat,X ;STA  (stardat,X)
  DEX 
  DEX 
  DEX 
@@ -57,8 +57,8 @@ movestars:
  DEY 
 movestar:
  LDA  stardat+2,X
- EOR  (stardat,X)
- STA  (stardat,X)
+ EOR  stardat,X ;EOR  (stardat,X)
+ STA  stardat,X ;STA  (stardat,X)
  LDA  stardat,X
  AND  #7
  CMP  #7
@@ -83,8 +83,8 @@ doapix:
  INC  stardat,X
 staron:
  LDA  stardat+2,X
- EOR  (stardat,X)
- STA  (stardat,X)
+ EOR  stardat,X ;EOR  (stardat,X)
+ STA  stardat,X ;STA  (stardat,X)
  INX 
  INX 
  INX 

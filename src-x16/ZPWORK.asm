@@ -88,8 +88,7 @@ aliens:
 aliensm1:
 .byte  0
 
-stardat:
-.res 40
+;stardat:
 ;.res 3 * 31
 
 ;; ]
