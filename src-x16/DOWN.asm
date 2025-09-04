@@ -11,7 +11,7 @@
 ;; MODE7HIMEM=&4000
 
 osbyte=$FFF4
- HIM EM		= $4000
+HIMEM		= $4000
 downaddr	= HIMEM
 
 ;; REM These may change !!
@@ -29,10 +29,10 @@ hsnum		= $69D
 
 download:
  LDA #$8C
- JSR osbyte
+ JSR osbyte; tape filing system
  LDA #4
  LDX #1
- JSR osbyte
+ JSR osbyte ; cursor editing
  LDX #$9F
  LDA #0
 killzp:

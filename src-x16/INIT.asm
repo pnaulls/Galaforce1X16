@@ -10,13 +10,15 @@
 ;; B%=P%
 ;; [OPT pass
 
-.segment "STARTUP"
-.segment "INIT"
-.segment "ONCE"
-.segment "CODE"
-
 
 exec:
+ LDA #$80
+ CLC
+ JSR SCREEN_MODE ; SET 320x240@256C MODE
+
+; LDA #65
+ JSR test_draw
+
  LDX #$FF
  TXS 
  JSR Stop
@@ -36,9 +38,9 @@ setup_hiscore:
  STA hiscore+2
 ; LDA#&90 LDX#0 LDY#1 JSRosbyte
  LDA #22
- JSR oswrch
+ JSR oswrch ; mode 2
  LDA #2
- JSR oswrch
+ JSR oswrch ; mode 2
  LDA #10
  STA $FE00
  LDA #32
@@ -46,9 +48,9 @@ setup_hiscore:
  JSR seed_rnd
  JSR starinit
  LDY #2
- JSR prnstr
+ JSR prnstr ; SCRtext
  LDY #4
- JSR prnstr
+ JSR prnstr ; HItext
  LDA #$80
  STA sound_flag
  STA pause_flag
@@ -57,10 +59,12 @@ setup_hiscore:
  JSR display_key_joy_status
 
  JSR init_score
- JSR wait_for_space
+ ;JSR wait_for_space
  TAY 
 
 ; The 'game' loop
+ ;lda #66
+ ;jmp test_loop
 
 restart:
  LDA #3
@@ -76,7 +80,7 @@ restart:
  JSR flagson
  LDA #14
  LDX #4
- JSR osbyte
+ JSR osbyte ; enable events
  LDA demo_flag
  BMI no_st_tune
  LDY #0

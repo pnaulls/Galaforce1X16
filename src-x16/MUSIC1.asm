@@ -19,6 +19,7 @@ Rest=63
 
 ;===================================================================
 StartTune:
+ RTS
  SEI 
  STY  WK
  LDA  LT+0,Y
@@ -132,6 +133,8 @@ dat:
  RTS 
 
 Stop:
+ RTS ; Avoid music
+
  LDX  #(HAL .mod 256)
  LDY  #(HAL / 256)
  STX  get+1

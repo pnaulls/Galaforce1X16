@@ -28,10 +28,11 @@ ystep		= 4
 
 graph		= $297A
 
-osasci		= $FFE3
-osbyte		= $FFF4
-oswrch		= $FFEE
-osword		= $FFF1
+;osasci		= $FFE3
+;osbyte		= $FFF4
+;oswrch		= $FFEE
+;osword		= $FFF1
+
 
 ;; PAGE=&5800
 ;; RETURN

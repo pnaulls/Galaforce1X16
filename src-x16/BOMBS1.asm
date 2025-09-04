@@ -63,7 +63,7 @@ bomb10:
  BMI kbd_fire
  LDA #$80
  LDX #0
- JSR osbyte
+ JSR osbyte ; Read ADC channel
  TXA 
  LSR A
  BCC not_button
@@ -154,7 +154,8 @@ mksound:
  BIT demo_flag
  BMI mks2
  LDA #7
- JMP osword
+
+ JMP osword; sound https://tobylobster.github.io/mos/mos/S-s15.html#SP31
 
 ;; ]
 ;; PRINT"Bombs 1 from &";~B%;" to &";~P%-1;" (";P%-B%;")"

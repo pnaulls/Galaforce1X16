@@ -12,14 +12,14 @@
 
 check_joy:
  LDA #$80
- JSR osbyte
+ JSR osbyte ; buffer status
  CPY #$C0
 ; was &FF then &E0
  RTS 
 
 check_joy2:
  LDA #$80
- JSR osbyte
+ JSR osbyte ; buffer status
  CPY #$40
 ; was 1 then &20
  ROR A
@@ -33,7 +33,7 @@ pause4:
 check_key:
  LDA #$81
  LDY #$FF
- JSR osbyte
+ JSR osbyte ; key within time
  CPY #$FF
  RTS 
 
@@ -57,7 +57,7 @@ pause:
  ROR pause_flag
  LDA #15
  LDX #0
- JSR osbyte
+ JSR osbyte  ; flush keyboard
 pause1:
  JSR pause4
  BEQ pause1
@@ -190,7 +190,7 @@ sound_on_off:
  STA sound_flag
  LDA #15
  LDX #0
- JSR osbyte
+ JSR osbyte  ; flush keyboard
 display_sound_status:
  LDY #16
 ; display 'S' or 'Q'

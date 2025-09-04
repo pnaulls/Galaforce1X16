@@ -108,7 +108,7 @@ chk_spc_fire:
  BEQ spc_pressed
  LDX #0
  LDA #$80
- JSR osbyte
+ JSR osbyte ; read ADC
  CLC 
  TXA 
  AND #1

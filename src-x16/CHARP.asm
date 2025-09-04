@@ -111,10 +111,10 @@ strdat:
 .word  zc
 
 paustxt:
-.word  $7FE8
-.byte 1
-.byte 60
-.byte 25
+.word  $7FE8 ; address
+.byte 1      ; count
+.byte 60     ; 'p'
+.byte 25     ; colour?
 
 SCRtext:
 .word  $3030

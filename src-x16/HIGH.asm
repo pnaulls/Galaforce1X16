@@ -168,21 +168,22 @@ gnam:
  BNE gn1
 gn3:
  LDA #7
- JSR oswrch
+ JSR oswrch ; write character - beep?
 gn1:
  STX wavbase
  STY wavbase+1
  LDA #21
  LDX #0
- JSR osbyte
+ ; Flush keyboard buffer - https://tobylobster.github.io/mos/mos/S-s17.html#SP29
+ JSR osbyte ; flush keyboard
 gn6:
  JSR movestars
  LDA #$7E
- JSR osbyte
+ JSR osbyte ; acknowledge escape
  LDA #$81
  LDX #2
  LDY #0
- JSR osbyte
+ JSR osbyte ; read inkey -2
  BCS gn6
  TXA 
  LDX wavbase
