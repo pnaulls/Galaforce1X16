@@ -82,7 +82,7 @@ VERA_dc_vscale    = $9F2B
 VERA_dc_border    = $9F2C
 VERA_dc_hstart    = $9F29
 VERA_dc_hstop     = $9F2A
-VERA_dc_vsstart   = $9F2B
+VERA_dc_vstart    = $9F2B
 VERA_dc_vstop     = $9F2C
 VERA_L0_config    = $9F2D
 VERA_L0_mapbase   = $9F2E
@@ -118,7 +118,7 @@ GIF_ctrl          = $9FB5
 KERNAL_ROM_BANK   = 0
 BASIC_ROM_BANK    = 4
 
-; Banked Addresses
+; Banked AddrSTAesses
 RAM_WIN           = $A000
 RAM_WIN_SIZE      = $2000
 ROM_WIN           = $C000
@@ -177,6 +177,7 @@ BASIC_INIT        := $C003
 
 ; VRAM Addresses
 VRAM_petscii   = $0F800
+VRAM_charmap   = $1F000
 VRAM_psg       = $1F9C0
 VRAM_palette   = $1FA00
 VRAM_sprattr   = $1FC00

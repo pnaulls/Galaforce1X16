@@ -4,9 +4,9 @@
 ;; (C) Kevin Edwards 1986-2019
 ;;
 
-objstrt	=$800	; Start of actual code, data is loaded below this later ( to &900 and &A00 )
-objend		=$3000	; End of code, where the Downloader is positioned
-objexec	=$4000	; Execution address when loaded to &1900 rather than &900 ( objend% + &1900 - &900 )
+objstrt =$800  ; Start of actual code, data is loaded below this later ( to &900 and &A00 )
+objend  =$3000 ; End of code, where the Downloader is positioned
+objexec =$4000 ; Execution address when loaded to &1900 rather than &900 ( objend% + &1900 - &900 )
 
 .include "x16.inc"
 
@@ -17,20 +17,21 @@ objexec	=$4000	; Execution address when loaded to &1900 rather than &900 ( objen
 ;; Normal ASCII
 ;.charmap ' ','Z', 32
 
+spfont:
 .org  objstrt - $200
 .incbin "object/O.SPFONT"
 
+spdigit:
 .org  objstrt - $100
 .incbin "object/O.DIGITS"
+
+.org  $80D
 
 ;; Main Code block - source files assembled in the same order as the original
 .segment "STARTUP"
 .segment "INIT"
 .segment "ONCE"
 .segment "CODE"
-
-
-.org  $80D
 
  jmp exec
 
@@ -77,28 +78,35 @@ test_draw_x:
  STY VERA_addr_high
  STA VERA_addr_bank
 
- ;LDA $3f
- STX VERA_data0
+ LDA #$ee
+ STA VERA_data0
 
  INX
  CPX #250
  BCC test_draw_x
  INY
- CPY #250
+ CPY #1
  BCC test_draw_y
 
  LDA #65
  JSR CHROUT
 
-test_draw_done:
- JMP test_draw_done
+ RTS
+
+vera_addr_lo:
+ .res 1
+vera_addr_hi:
+ .res 1
+vera_addr_bank:
+ .res 1
+
 
 osword:
 osbyte:
 oswrch:
   RTS
 
-stardat:    ;; Doesn;'t fit in zeropage and moving before code causes overflow
+stardat:    ;; Doesn't fit in zeropage and moving before code causes overflow
 .res 3 * 31
 
 objcodeend = *
@@ -113,8 +121,8 @@ objcodeend = *
  ; PRINT not implemented"Bytes left  = ",~$297A-objcodeend,"   (",$297A-objcodeend,") bytes"
 
 ;; Include the graphics object file ( From &297A to &2FFF )
-;.org  $297A
-;.incbin "object/O.GRAPHIC"
+.org  $297A
+.incbin "object/O.GRAPHIC"
 
 ;; Include the Downloader binary at its GENUINE load address
 ;.org  objend

@@ -21,25 +21,25 @@
 
 
 alst:
-		.res maxaliens
+    .res maxaliens
 algra:
-		.res maxaliens
+    .res maxaliens
 alpatlow:
-	.res maxaliens
+  .res maxaliens
 alpathigh:
-	.res maxaliens
+  .res maxaliens
 alpatoff:
-	.res maxaliens
+  .res maxaliens
 alcount:
-	.res maxaliens
+  .res maxaliens
 almult:
-		.res maxaliens
+    .res maxaliens
 aldirect:
-	.res maxaliens
+  .res maxaliens
 alx:
-			.res maxaliens
+      .res maxaliens
 aly:
-			.res maxaliens
+      .res maxaliens
 al_loop_count:
 .res maxaliens
 al_loop_start:
@@ -48,72 +48,72 @@ alpatreflect:
 .res maxaliens
 
 mybullx:
-		.res mymaxbull
+    .res mymaxbull
 mybully:
-		.res mymaxbull
+    .res mymaxbull
 mybullst:
-		.res mymaxbull
+    .res mymaxbull
 
 albullx:
-	.res almaxbull
+  .res almaxbull
 albully:
-		.res almaxbull
+    .res almaxbull
 albullst:
-		.res almaxbull
+    .res almaxbull
 albullspeed:
 .res almaxbull
 
 lives:
-			.byte  0
+      .byte  0
 myx:
-			.byte  0
+      .byte  0
 myy:
-		.byte  0
+    .byte  0
 myst:
-		.byte  0
+    .byte  0
 score_base:
 myscore:
-		.res 7
+    .res 7
 hiscore:
-		.res 7
+    .res 7
 
 wavoff:
-		.byte  0
+    .byte  0
 almove:
-		.byte  0
+    .byte  0
 curwave:
-	.byte  0
+  .byte  0
 procst:
-		.byte  0
+    .byte  0
 mybullact:
-	.byte  0
+  .byte  0
 albullact:
-	.byte  0
+  .byte  0
 initact:
-	.byte  0
+  .byte  0
 bombdel:
-	.byte  0
+  .byte  0
 dem_section:
 .byte  0
 
 sound_flag:
-		.byte  0
+    .byte  0
 key_joy_flag:
-	.byte  0
+  .byte  0
 demo_flag:
-		.byte  0
+    .byte  0
 demo_count:
-		.byte  0
+    .byte  0
 demo_direction:
-	.byte  0
+  .byte  0
 counter_sound:
-	.byte  0
+  .byte  0
 extra_life_flag:
 .byte  0
 sixteen_flag:
-	.byte  0
+  .byte  0
 pause_flag:
-		.byte  0
+    .byte  0
 
 hstxt:
 .byte "1234567890"

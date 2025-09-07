@@ -12,12 +12,106 @@
 
 
 exec:
- LDA #$80
- CLC
- JSR SCREEN_MODE ; SET 320x240@256C MODE
+
+    ; Approximate BBC Mode 2 - 160x256 with 16 colors.
+    ; The difference here is that the VERA bitmap is 320 pixels wide, and
+    ; we're scaling that, so per-line access needs to increment by 160 pixels, not
+    ; 80
+
+    ;
+    ; Configure a 160x256, 16-color bitmap mode
+    ;
+    ; Address autoincrement by 1
+    lda #$10
+    sta VERA_addr_bank
+    lda #$00
+    sta VERA_addr_high
+    sta VERA_addr_low
+
+    lda #0
+    sta VERA_L0_vscroll_l
+    sta VERA_L0_vscroll_h
+
+    ;
+    ; Configure Layer 0 for bitmap mode with 4-bit color
+    ;
+    lda #$06 ; bitmap mode, 4 bpp
+    sta VERA_L0_config
+
+    lda #$00 ; DCSEL = 0
+    sta VERA_ctrl
+
+    ; Set scaling for 160x256 resolution
+    ;
+    ; H-Scale = (160 / 640) * 256 = 0.25 * 256 = 64 = $40
+    lda #$40
+    sta VERA_dc_hscale
+
+    ; V-Scale = (256 / 480) * 256 ~= 0.533 * 256 ~= 136 = $88
+    lda #$88 ; Note that this gives inexact scaling.
+    ;lda #$80
+    sta VERA_dc_vscale
+
+    lda #$00
+    sta VERA_L0_mapbase
+    sta VERA_L0_tilebase
+
+    ; Enable video output, enable layer 0, 240p mode, RGB output
+    lda #$11 ; Layer 0, VGA
+    sta VERA_dc_video
+
+;        jsr test_draw
+
+    ldx #$00      ; Index register X = 0
+    ldy #$00      ; Index register Y = 0
+
+
+clear_vram:
+    lda #$ee
+    sta VERA_data0
+    sta VERA_data0
+    sta VERA_data0
+    sta VERA_data0
+    sta VERA_data0
+    sta VERA_data0
+    sta VERA_data0
+    sta VERA_data0
+
+    ; The screen is 160x256 pixels, which is (160 * 256) / 2 = 20480 bytes
+    ; So we need to loop 20480 times
+    inx
+    cpx #160
+
+    bne clear_vram
+    ldx #$00
+    iny
+    cpy #60
+    bne clear_vram
+
+wait:
+    wai
+    jmp wait
+
+
+charlist:
+ LDA #18
+showchars:
+ JSR CHROUT
+ INA
+ CMP #100
+ BNE showchars
+
+; LDY #3
+; JSR prnstr ; Entering wave
+
+; WAI
 
 ; LDA #65
- JSR test_draw
+; JSR test_draw
+
+done:
+ WAI
+ jmp done
 
  LDX #$FF
  TXS 

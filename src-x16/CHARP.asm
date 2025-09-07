@@ -11,21 +11,21 @@
 ;; [OPT pass
 
 prnstr:
- LDA  strdat,Y
+ LDA  strdat,Y    ; Low address
  STA  data
- LDA  strdat+1,Y
+ LDA  strdat+1,Y  ; High address
  STA  data+1
  LDY  #0
- LDA  (data),Y
+ LDA  (data),Y    ; BBC Screen address low
  STA  addres
  INY 
- LDA  (data),Y
+ LDA  (data),Y    ; BBC Screen address high
  STA  addres+1
  INY 
- LDA  (data),Y
+ LDA  (data),Y    ; Length
  STA  length
  INY 
- LDA  (data),Y
+ LDA  (data),Y    ; Color
  STA  colour
 nxtchr:
  LDA  colour
@@ -41,10 +41,10 @@ prnchr:
  ASL A
  ADC  temp
  TAX 
- LDA  #5
+ LDA  #5         ; 5 pixels wide
  STA  width
 pixcolum:
- LDY  #7
+ LDY  #7         ; 7 pixels high
  LDA  $700,X
  STA  temp
 ; Address of character set (spacey)
